@@ -5,7 +5,7 @@
 let eggsAssetId = base58'C1iWsKGqLwjHUndiQ7iXpdmPum9PeCDFfyXBdJJosDRS'
 let delayForHatching = 2
 
-let typesAmount = 9
+let typesAmount = 10
 
 let refContractAddress = base58'3P8ejTkfRpz9WqCwCuihesNXU5k3zmFFfVe'
 let RefererReward = 5 #percentage
@@ -83,10 +83,10 @@ func getRandomName(txId: ByteVector, hatchingFinishHeight: Int) = {
       else if (colorRandom == 2) then "B" 
       else "R"
 
-    if (typeRandom == 0) then ("DUCK-FFFFFFFF-G" + color, "8F-G")
-      else if (typeRandom == 1) then ("DUCK-HHHHHHHH-G" + color, "8H-G")
-      else if (typeRandom == 2) then ("DUCK-GGGGGGGG-G" + color, "8G-G")
-      else ("DUCK-IIIIIIII-G" + color, "8I-G")
+    if (typeRandom == 0) then ("DUCK-GGGGGGGG-G" + color, "8F-G")
+      else if (typeRandom == 1) then ("DUCK-HHHHHHHH-G" + color, "8G-G")
+      else if (typeRandom == 2) then ("DUCK-IIIIIIII-G" + color, "8H-G")
+      else ("DUCK-KKKKKKKK-G" + color, "8K-G")
     }
 }
 
