@@ -74,7 +74,7 @@ func checkIfDuckGetSick(duckId: String)={
     let lastCheckHeight = tryGetInteger(lastCheckHeightDuck(duckId))
     let number = if lastCheckHeight ==0 then height else lastCheckHeight
 
-    let randomNum = getRandomNumber(20, bytes, number, 2)
+    let randomNum = getRandomNumber(100, bytes, number, 2)
 
     let genericData = [
         StringEntry(lastCheckTxDuck(duckId),i.transactionId.toBase58String()),
