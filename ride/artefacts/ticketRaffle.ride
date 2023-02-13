@@ -109,7 +109,7 @@ func buyTicket(amount: Int)={
     if pmtUSDT.assetId.value() != getAssetId() then throw("TBT: Please attach the correct payment!") else
     if pmtUSDT.amount != totalPrice then throw("TBT: Please attach enough payment!") else
 
-    func handleTopUp(acc: List[StringEntry], index: Int) = {
+    func handleTopUp(acc: List[StringEntry|IntegerEntry], index: Int) = {
       if index <= amount then 
       let nr = index+totalTickets
       let address = i.caller.toString();
