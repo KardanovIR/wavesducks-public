@@ -87,22 +87,15 @@ func reward()={
 }
 
 @Callable(i)
-func configureOracle(oracle: String, assetId: String) = {
+func setup(oracle: String, assetId: String, startTime: Int, endTime: Int) = {
   if i.caller != this then throw("admin only") else 
   [
     StringEntry(staticKey_oracleAddress(),oracle),
-    StringEntry(staticKey_assetId(),assetId)
+    StringEntry(staticKey_assetId(),assetId),
+    IntegerEntry(staticKey_startTime(), startTime),
+    IntegerEntry(staticKey_endTime(), endTime)
   ]
 
-}
-
-@Callable(i)
-func setup(startTime: Int, endTime: Int) = {
-  if i.caller != this then throw("admin only") else
-    [
-      IntegerEntry(staticKey_startTime(), startTime),
-      IntegerEntry(staticKey_endTime(), endTime)
-    ]
 }
 
 
