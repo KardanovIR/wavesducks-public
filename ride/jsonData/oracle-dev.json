@@ -10,7 +10,7 @@
         {
             "key": "static_eggAssetId",
             "type": "string",
-            "value": "3v7zGkeHS6KrsvmTRzEzvCxm5cdzkCtM7z5cM6efcjCB"
+            "value": "ByDNZ4FQnD27uMmPqmqMNBiK86oEBoL2w3Us2z8cz1wF"
         },
         {
             "key": "static_incubatorAddress",
@@ -21,11 +21,6 @@
             "key": "static_rebirthAddress",
             "type": "string",
             "value": "3PKL9tfUmNciXvbSA3zpXr6PnDNnhn936ba"
-        },
-        {
-            "key": "static_swopPromoAddress",
-            "type": "string",
-            "value": "3P6s9C39Ak5FAQ3F5VapYJ3ULxgbsAReXWD"
         },
         {
             "key": "static_refContractAddress",
@@ -133,7 +128,7 @@
         {
             "key": "static_feeAggregator",
             "type": "string",
-            "value": "3P6AobNbcQ3ZjcRY37mJPKN8PP9Giz8kgeY"
+            "value": "3P6hQHv6LWTRdxJAJNT81zvrGURDYxErTtS"
             
         },
         {
@@ -158,6 +153,12 @@
             "type": "string",
             "value": "HSHP7YmvCX9vtKYfoTfcEd9hr8bnFm1PzoBrQRNy8q1q"
         },
+        {
+            "key": "static_ropeAddress",
+            "type": "string",
+            "value": "3PNuQXQQjEERkDSbHKnXjeawcc6MWws8e79"
+        },
+        
         {
             "key": "static_ducklingPrice",
             "type": "integer",
@@ -188,7 +189,54 @@
             "type": "string",
             "value": "3P8FgFUEvZCD1c6FkZM3zT5eYezocydyxDD"
             
+        },
+        {
+            "key": "static_pipelineUser",
+            "type": "string",
+            "value": "3P5NZnLvHbtcVe4oFjNbTGQUkRpGCaZkd4e"
+            
+        },
+        {
+            "key": "static_nodeAddress",
+            "type": "string",
+            "value": "3PA1KvFfq9VuJjg45p2ytGgaNjrgnLSgf4r"
+            
+        },
+        {
+            "key": "static_buybackAddress",
+            "type": "string",
+            "value": "3PLdbabW22kBhfy6Wnndbi6ex6D58VPCRUP"
+            
+        },
+        {
+            "key": "static_extraFee",
+            "type": "integer",
+            "value": 1
+            
+        },
+        {
+            "key": "static_ammAddress",
+            "type": "string",
+            "value": "3P5s8fYvGZuf8WGv5SVJYqyo5mbXUhhtKWj"
+            
+        },
+        {
+            "key": "static_huntMultiplierPrice",
+            "type": "integer",
+            "value": 1
+            
+        },
+        {
+            "key": "static_huntDistroAddress",
+            "type": "string",
+            "value": "3P7eZotfwNFYWGm9YeWhTZed1JdLdiszuh7"
+        },
+        {
+            "key": "static_levelSystemAddress",
+            "type": "string",
+            "value": "3P5x9RxuqbMaVFPsaycvXHeFZXPmcswxA1c"
         }
+        
     ],
     "fee": 600000,
     "feeAssetId": "WAVES",

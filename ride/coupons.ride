@@ -9,6 +9,13 @@ func tryGetStringExternal(address: Address, key: String) = {
     }
 }
 
+func tryGetBoolean(key: String) = {
+    match getBoolean(key) {
+        case b:Boolean => b
+        case _ => false
+    }
+
+}
 
 func tryGetString(key: String) = {
     tryGetStringExternal(this,key)
@@ -24,6 +31,12 @@ func tryGetInteger(key: String) = {
 func getOracle() = Address(tryGetString("static_oracleAddress").fromBase58String())
 
 #SC THAT CAN USE COUPONS
+func staticKey_turtleStakingAddress() = "static_turtleStakingAddress"
+func staticKey_turtleRebirthAddress() = "static_turtleRebirthAddress"
+func staticKey_ropeAddress() = "static_ropeAddress"
+func staticKey_levelSystemAddress() = "static_levelSystemAddress"
+func staticKey_spiceAssetId() = "static_spiceAssetId"
+
 func getRebirthAddress() =  Address(tryGetStringExternal(getOracle(),"static_rebirthAddress").fromBase58String()) #base58'3PCC6fVHNa6289DTDmcUo3RuLaFmteZZsmQ'
 func getIncubatorAddress() =  Address(tryGetStringExternal(getOracle(),"static_incubatorAddress").fromBase58String()) #base58'3PEktVux2RhchSN63DsDo4b4mz4QqzKSeDv'
 func getFarmingAddress() =  Address(tryGetStringExternal(getOracle(),"static_farmingAddress").fromBase58String())
@@ -32,14 +45,27 @@ func getBurnAddress() = Address(tryGetStringExternal(getOracle(),"static_burnAdd
 func getBabyduckAddress() = Address(tryGetStringExternal(getOracle(),"static_babyDuckAddress").fromBase58String())
 func getBreedingAddress() = Address(tryGetStringExternal(getOracle(),"static_breederAddress").fromBase58String())
 func getMasterAddress() = Address(tryGetStringExternal(getOracle(),"static_cfMasterAddress").fromBase58String())
+func getTurtleStakingAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_turtleStakingAddress()).fromBase58String()) #base58'3PEktVux2RhchSN63DsDo4b4mz4QqzKSeDv'
+func getTurtleRebirthAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_turtleRebirthAddress()).fromBase58String()) #base58'3PEktVux2RhchSN63DsDo4b4mz4QqzKSeDv'
+func getRopeAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_ropeAddress()).fromBase58String()) #base58'3PEktVux2RhchSN63DsDo4b4mz4QqzKSeDv'
+func getSpiceAssetId() = tryGetStringExternal(getOracle(),staticKey_spiceAssetId()).fromBase58String() #base58'C1iWsKGqLwjHUndiQ7iXpdmPum9PeCDFfyXBdJJosDRS'
+func getLevelSystemAddress() = Address(tryGetStringExternal(getOracle(),staticKey_levelSystemAddress()).fromBase58String())
 
 let wAccPKey = valueOrErrorMessage(getString(getOracle(),"static_warsPKey"),"static_warsPKey not defined").fromBase58String()
 
-let scCanUseCoupons = [getRebirthAddress(),getIncubatorAddress(),getFarmingAddress(),getGameDappAddress(), getBabyduckAddress(),getBreedingAddress() ]
+let scCanUseCoupons = [ getRebirthAddress(),getIncubatorAddress(),getFarmingAddress(),
+                        getGameDappAddress(), getBabyduckAddress(),getBreedingAddress(), getTurtleStakingAddress(),
+                        getTurtleRebirthAddress(),getRopeAddress(),getLevelSystemAddress()]
 
 func couponsUserSpend(user:String) = user+"_spend"
 func couponsUserActive(user:String) = user+"_active"
 func couponsUserActiveOld(user:String) = couponsUserActive(user)+"_old"
+func couponsSpendOnSc(sc:String) = sc+"_spend_by_using"
+func actionPerAddressPerUserPerDay(user:String,action:String,dappAddress:String, day:String) = dappAddress+"_"+action+"_"+user+"_"+day+"_actions"
+func actionPerAddressPerUserLastCheckDay(user:String,action:String) = action+"_"+user+"_actions_check_day"
+func actionPerAddressPerUserAmountInARow(user:String,action:String) = action+"_"+user+"_actions_amount_in_row"
+func userExperience(user:String) = user+"_experience"
+
 
 func addCouponsInternal(user:String,amount:Int)={
     let keyOld = couponsUserActiveOld(user)
@@ -52,7 +78,55 @@ func addCouponsInternal(user:String,amount:Int)={
     ]
 }
 
+#First day ever! Saturday, September 23, 2023 0:00:00
+let startTsMs = 1695427200000
+func calculateDaysSinceStart()={
+  let diff = lastBlock.timestamp-startTsMs
+  let daysPassed = diff/ (86400 *1000)
+  daysPassed
+}
 
+func hasDoneTask7Days(day: Int,address: String, actionName:String, rewardAmount:Int)={
+    let userExperienceKey = userExperience(address)
+    let userExpTilldate = tryGetInteger(userExperienceKey)
+
+    let checkDayKey = actionPerAddressPerUserLastCheckDay(address,actionName)
+    let daysInRowKey = actionPerAddressPerUserAmountInARow(address,actionName)
+    let lastCheckDay = tryGetInteger(checkDayKey)
+    let daysInRow = tryGetInteger(daysInRowKey)
+    let daysInRowUpdate = if lastCheckDay==day-1 then daysInRow+1 else if lastCheckDay<day-1 then 1 else 0
+    let lastCheckDayUpdate = day
+    let reward = if daysInRowUpdate == 7 then [
+        ScriptTransfer(addressFromStringValue(address),1_0000_0000,getSpiceAssetId()),
+        IntegerEntry(daysInRowKey,0)
+        ] else [
+            IntegerEntry(daysInRowKey,daysInRowUpdate)
+        ]
+    
+    [
+        IntegerEntry(checkDayKey,lastCheckDayUpdate),
+        ScriptTransfer(addressFromStringValue(address),rewardAmount,getSpiceAssetId()),
+        IntegerEntry(userExperienceKey,userExpTilldate+1)
+    ]++reward
+}
+
+func payAction(actionName:String, userAddress: Address, amount: Int, day:Int)={
+    let composedKey = if tryGetBoolean("TASK_"+actionName+"_EVERY") then actionName else actionName+"_"+amount.toString()
+    if tryGetBoolean("TASK_"+composedKey) then
+        hasDoneTask7Days(day,userAddress.toString(),composedKey,tryGetInteger("TASK_"+composedKey+"_REWARD_DAILY"))
+    else throw(composedKey)
+}
+
+func recordActionInternal(actionName:String, i:Invocation, address:Address)= {
+    if !containsElement(scCanUseCoupons, i.caller) then throw("CRA: Only certain smart contracts can use this reward module!") else #prevents outsider to implement our rewards
+
+        let day = calculateDaysSinceStart()
+        let actionKey = actionPerAddressPerUserPerDay(address.toString(),actionName,i.caller.toString(),day.toString())
+        let totalActions = tryGetInteger(actionKey)+1
+        [
+            IntegerEntry(actionKey,totalActions)
+        ]++payAction(actionName,address,totalActions, day)
+}
 
 @Callable(i)
 func configureOracle(oracle: String) = {
@@ -66,7 +140,10 @@ func configureOracle(oracle: String) = {
 @Callable(i)
 func addCoupons(user:String,amount:Int) = {
     if i.caller != this && i.callerPublicKey != wAccPKey then throw("CAC: admin only") else 
-    addCouponsInternal(user,amount)
+    if amount > 50_0000 then
+        recordActionInternal("VEGG50_0000",i,i.originCaller)++addCouponsInternal(user,amount)
+    else
+        addCouponsInternal(user,amount)
 
 }
 
@@ -79,8 +156,10 @@ func addCouponsBatch(batch:String) = {
         let user = splitArray[0]
         let amount = parseIntValue(splitArray[1])
         strict burnCall = invoke(getBurnAddress(), "burnByInvoke", [amount],[])
-
-        acc++addCouponsInternal(user,amount)
+        if amount > 50_0000 then
+            acc++recordActionInternal("VEGG50_0000",i,i.originCaller)++addCouponsInternal(user,amount)
+        else
+            acc++addCouponsInternal(user,amount)
 
     }
     FOLD<20>(couponsList, [], handleCoupon)
@@ -118,15 +197,25 @@ func useCoupons(amountTryingToPay:Int)= {
 
     let keySpend = couponsUserSpend(user)
     let keyOld = couponsUserActiveOld(user)
+    let keySpendSc = couponsSpendOnSc(i.caller.toString())
 
 
     let totalSpend = tryGetInteger(keySpend)+amountPaid
+    let totalSpendSc = tryGetInteger(keySpendSc)+amountPaid
     (
         [
             IntegerEntry(keySpend,totalSpend),
             IntegerEntry(keyOld,availableCoupons),
-            IntegerEntry(keyActive,availableCouponsLeft)
+            IntegerEntry(keyActive,availableCouponsLeft),
+            IntegerEntry(keySpendSc,totalSpendSc)
         ],
         amountPaid #Amount paid is the amount a user paid in coupons, so we can reduce this from the actual payment.
     )
+}
+
+
+@Callable(i)
+func recordAction(actionName:String)= {
+    recordActionInternal(actionName,i,i.originCaller)
+
 }

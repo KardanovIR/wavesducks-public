@@ -21,29 +21,58 @@ func tryGetString(key: String) = {
     tryGetStringExternal(this,key)
 }
 
-func getOracle() = Address(tryGetString("static_oracleAddress").fromBase58String())
+func staticKey_oracleAddress() = "static_oracleAddress"
+func staticKey_eggAssetId() = "static_eggAssetId"
+func staticKey_incubatorAddress() = "static_incubatorAddress"
+func staticKey_rebirthAddress() = "static_rebirthAddress"
+func staticKey_turtleRebirthAddress() = "static_turtleRebirthAddress"
+func staticKey_breederAddress() = "static_breederAddress"
+func staticKey_refContractAddress() = "static_refContractAddress"
+func staticKey_itemsAddress() = "static_itemsAddress"
+func staticKey_metaRaceAddress() = "static_metaRaceAddress"
+func staticKey_accBoosterAddress() = "static_accBoosterAddress"
+func staticKey_proxyStakingContracts() = "static_proxyStakingContracts"
+func staticKey_maintenance() = "static_maintenance"
+#TODO add last 4 also here
+func staticKey_cfMasterAddress() = "static_cfMasterAddress"
+func staticKey_duckWrapper() = "static_duckWrapper"
+func staticKey_couponsAddress() = "static_couponsAddress"
+func staticKey_burnAddress() = "static_burnAddress"
+func staticKey_extraFee() = "static_extraFee"
+func staticKey_feeAggregator() = "static_feeAggregator"
+func staticKey_huntAddress() = "static_huntAddress"
 
-func getEggAssetId() = tryGetStringExternal(getOracle(),"static_eggAssetId").fromBase58String() #base58'C1iWsKGqLwjHUndiQ7iXpdmPum9PeCDFfyXBdJJosDRS'
-func getIncubatorAddress() =  Address(tryGetStringExternal(getOracle(),"static_incubatorAddress").fromBase58String()) #base58'3PEktVux2RhchSN63DsDo4b4mz4QqzKSeDv'
-func getRebirthAddress() =  Address(tryGetStringExternal(getOracle(),"static_rebirthAddress").fromBase58String()) #base58'3PCC6fVHNa6289DTDmcUo3RuLaFmteZZsmQ'
-func getSwopPromoAddress() =  Address(tryGetStringExternal(getOracle(),"static_swopPromoAddress").fromBase58String()) #base58'3P6s9C39Ak5FAQ3F5VapYJ3ULxgbsAReXWD'
-func getBreederAddress() =  Address(tryGetStringExternal(getOracle(),"static_breederAddress").fromBase58String()) #base58'3PDVuU45H7Eh5dmtNbnRNRStGwULA7NY6Hb'
-func getRefContractAddress() =  Address(tryGetStringExternal(getOracle(),"static_refContractAddress").fromBase58String()) #base58'3P8ejTkfRpz9WqCwCuihesNXU5k3zmFFfVe'
-func getItemsAddress() =  Address(tryGetStringExternal(getOracle(),"static_itemsAddress").fromBase58String())
-func getMetaraceAddress() =  Address(tryGetStringExternal(getOracle(),"static_metaRaceAddress").fromBase58String())
-func getAccBoosterAddress() =  Address(tryGetStringExternal(getOracle(),"static_accBoosterAddress").fromBase58String())
-func getProxyStaking() =  tryGetStringExternal(getOracle(),"static_proxyStakingContracts")
-func getMaintenance() =  tryGetStringExternal(getOracle(),"static_maintenance")
-func getCfMasterAddress() =  Address(tryGetStringExternal(getOracle(),"static_cfMasterAddress").fromBase58String())
-func getDuckWrapperSc() =  Address(tryGetStringExternal(getOracle(),"static_duckWrapper").fromBase58String())
-func getCouponsAddress() = Address(tryGetStringExternal(getOracle(),"static_couponsAddress").fromBase58String()) 
-func getBurnAddress() = Address(tryGetStringExternal(getOracle(),"static_burnAddress").fromBase58String())
-#func getSicknessAddress() = Address(tryGetStringExternal(getOracle(),"static_sicknessAddress").fromBase58String())
+func getOracle() = Address(tryGetString(staticKey_oracleAddress()).fromBase58String())
+func getEggAssetId() = tryGetStringExternal(getOracle(),staticKey_eggAssetId()).fromBase58String() #base58'C1iWsKGqLwjHUndiQ7iXpdmPum9PeCDFfyXBdJJosDRS'
+func getIncubatorAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_incubatorAddress()).fromBase58String()) #base58'3PEktVux2RhchSN63DsDo4b4mz4QqzKSeDv'
+func getRebirthAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_rebirthAddress()).fromBase58String()) #base58'3PCC6fVHNa6289DTDmcUo3RuLaFmteZZsmQ'
+func getTurtleRebirthAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_turtleRebirthAddress()).fromBase58String()) #base58'3PCC6fVHNa6289DTDmcUo3RuLaFmteZZsmQ'
+func getBreederAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_breederAddress()).fromBase58String()) #base58'3PDVuU45H7Eh5dmtNbnRNRStGwULA7NY6Hb'
+func getRefContractAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_refContractAddress()).fromBase58String()) #base58'3P8ejTkfRpz9WqCwCuihesNXU5k3zmFFfVe'
+func getItemsAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_itemsAddress()).fromBase58String())
+func getMetaraceAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_metaRaceAddress()).fromBase58String())
+func getAccBoosterAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_accBoosterAddress()).fromBase58String())
+func getProxyStaking() =  tryGetStringExternal(getOracle(),staticKey_proxyStakingContracts())
+func getMaintenance() =  tryGetStringExternal(getOracle(),staticKey_maintenance())
+func getCfMasterAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_cfMasterAddress()).fromBase58String())
+func getDuckWrapperSc() =  Address(tryGetStringExternal(getOracle(),staticKey_duckWrapper()).fromBase58String())
+func getCouponsAddress() = Address(tryGetStringExternal(getOracle(),staticKey_couponsAddress()).fromBase58String()) 
+func getBurnAddress() = Address(tryGetStringExternal(getOracle(),staticKey_burnAddress()).fromBase58String())
+func getFeeAggregator() = Address(tryGetStringExternal(getOracle(),staticKey_feeAggregator()).fromBase58String())
+func getHuntAddress() = Address(tryGetStringExternal(getOracle(),staticKey_huntAddress()).fromBase58String())
 
 let RefererReward = 5 #percentage
 
+func checkAdditionalPayment(payment: AttachedPayment)= {
+  if isDefined(payment.assetId) then throw("FCAP: Please attach waves") else
+  let feeAmount = getIntegerValue(getOracle(),staticKey_extraFee())
+  if payment.amount != feeAmount then throw("FCAP: Please attach exactly "+feeAmount.toString()+" amount of wavelets") else
+  [ScriptTransfer(getFeeAggregator(), feeAmount, unit)]
+
+}
+
 func getRewardPerBlock() = {
-  548 # 0.0684 EGGs per block
+  274 # 0.0684 EGGs per block
 }
 
 func isLocked() = {
@@ -160,7 +189,6 @@ func addAssetIdToGenEntry(assetId: String, assetGen: String) = {
 
 
 func getStakeResult(address: String, assetId: ByteVector, assetFarmingPower: Int, unstaker: String) = {
-  #if tryGetBooleanExternal(getSicknessAddress(),isSickDuck(assetId.toBase58String())) then throw("FGSR: Please first heal your duck!") else
   let asset = assetId.toBase58String()
   [
     IntegerEntry("total_farmingPower", tryGetInteger("total_farmingPower") + assetFarmingPower),
@@ -193,9 +221,7 @@ func getUnstakeResult(address: String, assetId: ByteVector, color: String, calle
   let reward = (farmedAmount - withdrawnAmount) / (scale * 100)
 
   let isWithoutPerch = tryGetBoolean("address_"+address+"_asset_"+asset+"_without_perch")
-  #strict sicknessCheck = invoke(getSicknessAddress(),"checkIfDuckGetSick",[asset],[]).asBoolean()
-  let sicknessCheck = false
-  let rewardAfterSickNess = if sicknessCheck then 0 else reward
+  let rewardAfterSickNess = reward
   let appendPerches = if isWithoutPerch then [DeleteEntry("address_"+address+"_asset_"+asset+"_without_perch")] else [IntegerEntry("address_"+address+"_perchesAvailable_"+color, tryGetInteger("address_"+address+"_perchesAvailable_"+color) + 1)]
   let sendTx = if claimEggs then ([
             ScriptTransfer(caller, rewardAfterSickNess * 1000000, getEggAssetId())
@@ -269,11 +295,22 @@ func unstakeJackpotInternal(asset: String, i: Invocation, claimEgg: Boolean) = {
   
 }
 
+func getBool(key: String) = {
+  match getBoolean(this, key) {
+      case b:Boolean => b
+      case _ => false
+  }
+}
+
+func isTestEnv()={
+  getBool("TESTENV")
+}
+
 @Callable(i)
 func configureOracle(oracle: String) = {
   if i.caller != this then throw("FCO: admin only") else 
   [
-    StringEntry("static_oracleAddress",oracle)
+    StringEntry(staticKey_oracleAddress(),oracle)
   ]
 
 }
@@ -288,6 +325,7 @@ func init() = {
 @Callable(i)
 func buyPerch(colorI: String, refererAddress: String) = {
     strict locked =  isLocked()
+    strict validPayment = if i.caller == getHuntAddress() || i.caller == getMetaraceAddress() then [] else checkAdditionalPayment(i.payments[0])
     let color = if colorI == "U" then "B" else colorI
     if (["B", "R", "G", "Y"].indexOf(color).value() < 0) then {
       throw("you need to set color properly")
@@ -299,17 +337,18 @@ func buyPerch(colorI: String, refererAddress: String) = {
         }else {
             exactPrice
         }
-
       strict payment = if leftToPay!=0 then {
-        let firstPayment = i.payments[0].value()
+        let firstPayment = if size(i.payments) == 2 then  i.payments[1].value() else  i.payments[0].value()
 
         if (firstPayment.assetId != getEggAssetId()) then throw("FBP: You can attach only EGG tokens with the following asset id: " + getEggAssetId().toBase58String()) else 
         if (firstPayment.amount != leftToPay) then throw("FBP: To buy a perch you currently need the following amount of EGGlets: " + leftToPay.toString()+ " "+i.caller.toString()) else
         let refererRewardForPerch = fraction(leftToPay, RefererReward, 100)
         strict refCall = invoke(getRefContractAddress(), "refPayment",
-        [refererAddress], [AttachedPayment(getEggAssetId(), refererRewardForPerch)])
+        [refererAddress], [AttachedPayment(getEggAssetId(), refererRewardForPerch)]).asBoolean()
 
-        strict burnCall = invoke(getBurnAddress(), "burnAttachedPayments", [],[AttachedPayment(getEggAssetId(),leftToPay-refererRewardForPerch)])
+        let toBurn = if refCall then leftToPay-refererRewardForPerch else leftToPay
+
+        strict burnCall = invoke(getBurnAddress(), "burnAttachedPayments", [],[AttachedPayment(getEggAssetId(),toBurn)])
         
         leftToPay
       }else 0
@@ -320,7 +359,7 @@ func buyPerch(colorI: String, refererAddress: String) = {
 
       [
         IntegerEntry(perchAmountKey, perchAmount + 1)
-      ]
+      ]++validPayment
       
     }
   
@@ -331,7 +370,7 @@ func addFreePerch(address: String, color: String) = {
   strict locked =  isLocked()
   if (["B", "R", "G", "Y"].indexOf(color).value() < 0) then {
     throw("you need to set color properly")
-  } else if (i.caller != getRebirthAddress() && i.caller != this && i.caller != getSwopPromoAddress()) then {
+  } else if (i.caller != getRebirthAddress() && i.caller != getTurtleRebirthAddress() && i.caller != this ) then {
     throw("rebirth and swop promo only")
   } else {
     let perchAmountKey = "address_" + address + "_perchesAvailable_" + color
@@ -345,6 +384,7 @@ func addFreePerch(address: String, color: String) = {
 @Callable(i)
 func stakeNFT() = {
   strict locked = isLocked()
+  strict validPayment = if i.caller == getHuntAddress() || i.caller == getMetaraceAddress() then [] else checkAdditionalPayment(i.payments[1])
   let pmt = i.payments[0].value()
   let assetId = i.payments[0].value().assetId.value()
   let realCaller = i.caller.toString()
@@ -363,7 +403,7 @@ func stakeNFT() = {
 
     getStakeResult(address, assetId, assetFarmingPower, realCaller) ++ [
       IntegerEntry("address_"+address+"_perchesAvailable_"+color, availablePerches - 1)
-    ]
+    ]++validPayment
   }
     
 }
@@ -391,8 +431,9 @@ func stakeNFTWithoutPerch() = {
 
 @Callable(i)
 func unstakeNFT(asset: String) = {
-
-  unstakeNFTInternal(asset,i,true)
+  strict validPayment = if i.caller == getMetaraceAddress() then [] else checkAdditionalPayment(i.payments[0])
+  let result = unstakeNFTInternal(asset,i,true)
+  (result._1++validPayment,result._2)
   
 }
 
@@ -408,6 +449,7 @@ func unstakeNFTWithoutClaim(asset: String) = {
 @Callable(i)
 func stakeJackpot(color: String) = {
     strict locked = isLocked()
+    strict validPayment = if i.caller == getHuntAddress() || i.caller == getMetaraceAddress() then [] else checkAdditionalPayment(i.payments[1])
     let pmt = i.payments[0].value()
     let assetId = pmt.assetId.value()
     let realCaller = i.caller.toString()
@@ -428,7 +470,7 @@ func stakeJackpot(color: String) = {
           getStakeResult(address, assetId, farmingPower._2,realCaller) ++ [
             IntegerEntry("address_"+address+"_perchesAvailable_"+color, availablePerches - 1),
             StringEntry("address_"+address+"_asset_"+assetId.toBase58String()+"_perchColor", color)
-          ]
+          ]++validPayment
         }
       }
     } else {
@@ -439,8 +481,10 @@ func stakeJackpot(color: String) = {
 
 @Callable(i)
 func unstakeJackpot(asset: String) = {
+  strict validPayment = checkAdditionalPayment(i.payments[0])
+  let result = unstakeJackpotInternal(asset,i,true)
+  (result._1++validPayment,result._2)
   
-  unstakeJackpotInternal(asset,i,true)
 
   
 }
@@ -456,22 +500,11 @@ func unstakeJackpotWithoutClaimEgg(asset: String) = {
 @Callable(i)
 func claimReward(asset: String) = {
   strict locked = isLocked()
+  strict validPayment = if i.originCaller == getCfMasterAddress() then [] else checkAdditionalPayment(i.payments[0])
   let address = if i.originCaller == getCfMasterAddress() then i.caller.toString() else i.originCaller.toString()
 
 
     let assetId = asset.fromBase58String()
-
-    #strict sicknessCheck = invoke(getSicknessAddress(),"checkIfDuckGetSick",[asset],[]).asBoolean()
-    let sicknessCheck = false
-    if sicknessCheck then 
-    
-      let assetFarmingPower =  getLastKnownAssetFarmingPower(address, asset)
-      [
-        IntegerEntry("total_farmingPower", tryGetInteger("total_farmingPower") - assetFarmingPower),
-        IntegerEntry("address_"+address+"_asset_"+asset+"_farmingPower", 0)
-      ]
-    
-    else
 
     let assetFarmingPower = getLastKnownAssetFarmingPower(address, asset)
     let assetRewardDelta = calcAssetRewardDelta(address, asset, assetFarmingPower)
@@ -487,7 +520,7 @@ func claimReward(asset: String) = {
         [
         IntegerEntry("address_"+address+"_asset_"+asset+"_withdrawnAmount", tryGetInteger("address_"+address+"_asset_"+asset+"_withdrawnAmount") + reward * scale2),
         ScriptTransfer(Address(address.fromBase58String()), reward * 1000000, getEggAssetId())
-        ],
+        ]++validPayment,
         reward * 1000000
       )
     
@@ -495,22 +528,12 @@ func claimReward(asset: String) = {
 }
 
 
-@Callable(i)
-func healDuck(duckId: String)={
-  #strict sicknessCheck = invoke(getSicknessAddress(),"healDuck",[duckId],i.payments).asBoolean()
-  let address = if isProxyStakingSc(i.caller.toString())  then i.originCaller.toString() else i.caller.toString()
-  let farmingPower = getAssetFarmingPower(duckId.toBytes(),address)._2
-
-  [
-    IntegerEntry("total_farmingPower", tryGetInteger("total_farmingPower") + farmingPower),
-    IntegerEntry("address_"+address+"_asset_"+duckId+"_farmingPower", farmingPower)
-  ] 
-
-}
-
 @Verifier(tx)
 func verify() = {
-    let firstUser = base58'FzsTVRXqD46KW5yj6qGNVrsouvWjpCQvD1446A96iGt4'
+  if isTestEnv() then 
+      sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
+  else
+    let firstUser = base58'6TdaXEfhnjYquvPf3yV7MFxt2CbgFmaqsvGwkKfXtKi4'
     let secondUser = base58'E23yUg8eun5nXB1nZRDf7RTyRADKxQhGNXdpTYonEvtU'
     let thirdUser = base58'Ga8WEBTPXbHuoXRD355mQ6ms8PsM2RFYKeA1mEP32CFe'
 

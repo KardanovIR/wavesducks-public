@@ -23,11 +23,6 @@
             "value": "3PCC6fVHNa6289DTDmcUo3RuLaFmteZZsmQ"
         },
         {
-            "key": "static_swopPromoAddress",
-            "type": "string",
-            "value": "3P6s9C39Ak5FAQ3F5VapYJ3ULxgbsAReXWD"
-        },
-        {
             "key": "static_refContractAddress",
             "type": "string",
             "value": "3P8ejTkfRpz9WqCwCuihesNXU5k3zmFFfVe"
@@ -113,6 +108,13 @@
             "value": "3PR87TwfWio6HVUScSaHGMnFYkGyaVdFeqT;3PFfetFUtrnxjv8Q66t9U5fqLFbyoFxzCQo;3PDbviVyp8vGmCnnjf2rHT4fpUMYe8XtgSL"
         },
         {
+            "key": "static_ropeAddress",
+            "type": "string",
+            "value": "3P6dr3R6kKCsiRd1ebPx8XM4r1qdmUyHAN8"
+        },
+            
+        
+        {
             "key": "static_maintenance",
             "type": "string",
             "value": ""
@@ -133,7 +135,7 @@
         {
             "key": "static_feeAggregator",
             "type": "string",
-            "value": "3P6AobNbcQ3ZjcRY37mJPKN8PP9Giz8kgeY"
+            "value": "3P6hQHv6LWTRdxJAJNT81zvrGURDYxErTtS"
             
         },
         {
@@ -171,8 +173,64 @@
             "key": "static_maxProxyDiff",
             "type": "integer",
             "value": 50
+        },
+        {
+            "key": "static_pipelineUser",
+            "type": "string",
+            "value": "3P5NZnLvHbtcVe4oFjNbTGQUkRpGCaZkd4e"
+            
+        },
+        {
+            "key": "static_nodeAddress",
+            "type": "string",
+            "value": "3PA1KvFfq9VuJjg45p2ytGgaNjrgnLSgf4r"
+            
+        },
+        {
+            "key": "static_buybackAddress",
+            "type": "string",
+            "value": "3PLdbabW22kBhfy6Wnndbi6ex6D58VPCRUP"
+            
+        },
+        {
+            "key": "static_extraFee",
+            "type": "integer",
+            "value": 1000000
+            
+        },
+        {
+            "key": "static_ammAddress",
+            "type": "string",
+            "value": "3PAZsTidSJHjo1xxqY9t3Rvuk144u3EHQXQ"
+            
+        },
+        {
+            "key": "static_huntMultiplierPrice",
+            "type": "integer",
+            "value": 50000000
+            
+        },
+        {
+            "key": "static_huntDistroAddress",
+            "type": "string",
+            "value": "3P7eZotfwNFYWGm9YeWhTZed1JdLdiszuh7"
+        },
+        {
+            "key": "static_rentingAddress",
+            "type": "string",
+            "value": "3P355gZeQTTSwE5Cynz9FQekvWJRhASBHFC"
+        },
+        {
+            "key": "static_levelSystemAddress",
+            "type": "string",
+            "value": "3P5gckRPNh1ve5mZS4SkFY3T8pYqaApjqCi"
         }
 
+
+        
+
+        
+        
         
     ],
     "fee": 600000,

@@ -1,0 +1,84 @@
+# This is a basic workflow that is manually triggered
+
+name: Deploy dapps
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  deploy-root:
+    strategy:
+      fail-fast: false
+      matrix:
+        sc:
+          [
+            breeder,
+            farming,
+            baby_Duck_Breeding,
+            baby_Duck,
+            incubator,
+            renting,
+            burn,
+            action_Wrapper,
+            marketplace,
+            marketplace_Proxy,
+            egg_Dispenser,
+            ref_Contract,
+            rebirth,
+            coupons,
+          ]
+    runs-on: ubuntu-latest
+    name: ${{ matrix.sc }}
+    steps:
+      - name: "check if ${{matrix.sc}} exists"
+        env:
+          super_secret: ${{ secrets[matrix.sc] }}
+        if: ${{ env.super_secret == '' }}
+        run: exit 1
+
+      - uses: actions/checkout@v3
+      - name: npm install waves/surfboard
+        run: npm install -g @waves/surfboard
+
+      - name: deploy ${{ matrix.sc }}
+        run: surfboard run deploy-scripts/dapp.deploy.js
+        env:
+          FILE: ${{ matrix.sc }}
+          SEED: ${{ secrets[matrix.sc] }}
+
+  deploy-subdir:
+    strategy:
+      fail-fast: false
+      matrix:
+        sc:
+          [
+            artefacts_ticket_Raffle,
+            artefacts_items,
+            artefacts_wearables,
+            artefacts_acc_Booster,
+            games_hunt,
+            turtle_breeder,
+            turtle_incubator,
+            turtle_staking,
+            turtle_rebirth,
+          ]
+    runs-on: ubuntu-latest
+    name: ${{ matrix.sc }}
+    steps:
+      - name: "check if ${{matrix.sc}} exists"
+        env:
+          super_secret: ${{ secrets[matrix.sc] }}
+        if: ${{ env.super_secret == '' }}
+        run: exit 1
+
+      - uses: actions/checkout@v3
+      - name: npm install waves/surfboard
+        run: npm install -g @waves/surfboard
+
+      - name: deploy ${{ matrix.sc }}
+        run: surfboard run deploy-scripts/dapp-sub.deploy.js
+        env:
+          FILE: ${{ matrix.sc }}
+          SEED: ${{ secrets[matrix.sc] }}

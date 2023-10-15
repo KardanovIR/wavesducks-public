@@ -1,0 +1,65 @@
+# This is a basic workflow that is manually triggered
+
+name: Add item to itemstore
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "give me the item name"
+        default: "ART-PLACEHOLDER"
+        type: string
+      priceAsset:
+        description: "give me the price asset"
+        default: "WAVES"
+        type: string
+      maxSales:
+        description: "give me the max sales"
+        default: 0
+        type: number
+      sale:
+        description: "tell me if the item should be for sale"
+        default: true
+        type: boolean
+      growingPercentage:
+        description: "give me price growth rate"
+        default: 0
+        type: number
+      startTs:
+        description: "give me the start ts"
+        default: 0
+        type: number
+      endTs:
+        description: "give me the end ts"
+        default: 0
+        type: number
+      startPrice:
+        description: "give me the start price"
+        default: 100000000
+        type: number
+      prod:
+        description: "tell me if i should use prod env"
+        default: false
+        type: boolean
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: ${{inputs.name}}
+    steps:
+      - uses: actions/checkout@v3
+      - name: npm install waves/surfboard
+        run: npm install -g @waves/surfboard
+      - name: add items ${{ inputs.name }}
+        run: surfboard run deploy-scripts/item.deploy.js
+        env:
+          NAME: ${{ inputs.name }}
+          PRICEASSET: ${{ inputs.priceAsset }}
+          MAXSALES: ${{inputs.maxSales}}
+          SALE: ${{inputs.sale}}
+          GROWINGPERCENTAGE: ${{inputs.growingPercentage}}
+          STARTTS: ${{inputs.startTs}}
+          ENDTS: ${{inputs.endTs}}
+          STARTPRICE: ${{inputs.startPrice}}
+          PROD: ${{inputs.prod}}
+          SEED: ${{ secrets['PIPELINE_USER'] }}

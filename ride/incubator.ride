@@ -14,14 +14,17 @@ func tryGetString(key: String) = {
     tryGetStringExternal(this,key)
 }
 
+func staticKey_turtleRebirthAddress() = "static_turtleRebirthAddress"
+
+
 func getOracle() = Address(tryGetString("static_oracleAddress").fromBase58String())
 func getEggAssetId() = tryGetStringExternal(getOracle(),"static_eggAssetId").fromBase58String() #base58'C1iWsKGqLwjHUndiQ7iXpdmPum9PeCDFfyXBdJJosDRS'
 func getRebirthAddress() =  Address(tryGetStringExternal(getOracle(),"static_rebirthAddress").fromBase58String()) #base58'3PCC6fVHNa6289DTDmcUo3RuLaFmteZZsmQ'
-func getSwopPromoAddress() =  Address(tryGetStringExternal(getOracle(),"static_swopPromoAddress").fromBase58String()) #base58'3P6s9C39Ak5FAQ3F5VapYJ3ULxgbsAReXlet babyDucksAddress = base58'3PKmLiGEfqLWMC1H9xhzqvAZKUXfFm8uoeg'
 func getBabyDuckAddress() =  Address(tryGetStringExternal(getOracle(),"static_babyDuckAddress").fromBase58String()) #base58'3P6s9C39Ak5FAQ3F5VapYJ3ULxgbsAReXlet babyDucksAddress = base58'3PKmLiGEfqLWMC1H9xhzqvAZKUXfFm8uoeg'
 func getRefContractAddress() =  Address(tryGetStringExternal(getOracle(),"static_refContractAddress").fromBase58String()) #base58'3P8ejTkfRpz9WqCwCuihesNXU5k3zmFFfVe'
 func getCouponsAddress() = Address(tryGetStringExternal(getOracle(),"static_couponsAddress").fromBase58String()) 
 func getBurnAddress() = Address(tryGetStringExternal(getOracle(),"static_burnAddress").fromBase58String())
+func getTurtleRebirthAddress() =  Address(tryGetStringExternal(getOracle(),staticKey_turtleRebirthAddress()).fromBase58String()) #base58'3PCC6fVHNa6289DTDmcUo3RuLaFmteZZsmQ'
 
 
 let delayForHatching = 2
@@ -89,12 +92,14 @@ func getRandomName(txId: ByteVector, hatchingFinishHeight: Int) = {
   let entry = IntegerEntry("last_jackpot_random", jackpotRandom)
   if (jackpotRandom == 51 && wasUniqueBorn("DUCK-WWWWINAL-JU") == 0) then {
     ("DUCK-WWWWINAL-JU", "1A1I1L1N4W-J", entry)
-  } else if (jackpotRandom == 26 && wasUniqueBorn("DUCK-WWWWECEL-JU") == 0) then {
-    ("DUCK-WWWWECEL-JU", "2E1C1L4W-J", entry)
-  }else if (jackpotRandom == 99 && wasUniqueBorn("DUCK-WWTIFINE-JU") == 0) then {
-    ("DUCK-WWTIFINE-JU", "1E1F2I1N1T2W-J", entry)
-  }else if (jackpotRandom == 69 && wasUniqueBorn("DUCK-WWWWBEIJ-JU") == 0) then {
-    ("DUCK-WWWWBEIJ-JU", "1B1E1I1J4W-J", entry)
+  }else if (jackpotRandom == 19 && wasUniqueBorn("DUCK-WWWCLOWN-JU") == 0) then {
+    ("DUCK-WWWCLOWN-JU", "1C1L1N1O4W-J", entry)
+  }else if (jackpotRandom == 29 && wasUniqueBorn("DUCK-WWDETECT-JU") == 0) then {
+    ("DUCK-WWDETECT-JU", "1C1D2E2T2W-J", entry)
+  }else if (jackpotRandom == 39 && wasUniqueBorn("DUCK-WWWADMIN-JU") == 0) then {
+    ("DUCK-WWWADMIN-JU", "1A1D1I1M1N3W-J", entry)
+  }else if (jackpotRandom == 9 && wasUniqueBorn("DUCK-WWWWFARM-JU") == 0) then {
+    ("DUCK-WWWWFARM-JU", "1A1F1M1R4W-J", entry)
   }else {
     let typeRandom = getRandomNumber(4, txId, hatchingFinishHeight, 5)
     let colorRandom = getRandomNumber(4,  txId, hatchingFinishHeight, 6)
@@ -103,10 +108,10 @@ func getRandomName(txId: ByteVector, hatchingFinishHeight: Int) = {
       else if (colorRandom == 2) then "B" 
       else "R"
 
-    if (typeRandom == 0) then ("DUCK-IIIIIIII-G" + color, "8I-G", entry)
-      else if (typeRandom == 1) then ("DUCK-KKKKKKKK-G" + color, "8K-G", entry)
-      else if (typeRandom == 2) then ("DUCK-LLLLLLLL-G" + color, "8L-G", entry)
-      else ("DUCK-MMMMMMMM-G" + color, "8M-G", entry)
+    if (typeRandom == 0) then ("DUCK-LLLLLLLL-G" + color, "8L-G", entry)
+      else if (typeRandom == 1) then ("DUCK-MMMMMMMM-G" + color, "8M-G", entry)
+      else if (typeRandom == 2) then ("DUCK-NNNNNNNN-G" + color, "8N-G", entry)
+      else ("DUCK-OOOOOOOO-G" + color, "8O-G", entry)
   }
 }
 
@@ -171,6 +176,17 @@ func finishHatchingInternal(txIdStr: String, owner: String)={
     }
 }
 
+func getBool(key: String) = {
+  match getBoolean(this, key) {
+      case b:Boolean => b
+      case _ => false
+  }
+}
+
+func isTestEnv()={
+  getBool("TESTENV")
+}
+
 @Callable(i)
 func configureOracle(oracle: String) = {
   if i.caller != this then throw("ICU: admin only") else 
@@ -222,7 +238,7 @@ func startDuckHatching(refererAddress: String) = {
 func startDuckHatchingForAddress(address: String) = {
   if (isLocked() > 0) then 
     throw("ISDHFA: EGG operations are temporarily locked")
-   else if (i.caller != getSwopPromoAddress() && i.caller!= this) then throw("ISDHFA: Permission denied") else {
+   else if (i.caller!= this) then throw("ISDHFA: Permission denied") else {
     let totalDucksAmount = tryGetInteger("ducks_amount")
     let eggsNeeded = countEggsNeededAmount(totalDucksAmount)
 
@@ -284,7 +300,7 @@ func issueFreeDuck(address: String, txIdStr: String) = {
 
 @Callable(i)
 func issueFreeDuckDefinedGenes(address: String, txIdStr: String, genes:String) = {
-  if (i.caller != this) then {
+  if (i.caller != this && i.caller != getTurtleRebirthAddress()) then {
     throw("IIFDDG: Admin only!")
   } else {
     let txId = fromBase58String(txIdStr)
@@ -384,6 +400,31 @@ func finishDuckHatchingAdmin(txIdStr: String, owner: String) = {
 }
 
 @Verifier(tx)
-func verify() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
+func verify() = {
+  if isTestEnv() then 
+      sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
+  else
+    let firstUser = base58'6TdaXEfhnjYquvPf3yV7MFxt2CbgFmaqsvGwkKfXtKi4'
+    let secondUser = base58'E23yUg8eun5nXB1nZRDf7RTyRADKxQhGNXdpTYonEvtU'
+    let thirdUser = base58'Ga8WEBTPXbHuoXRD355mQ6ms8PsM2RFYKeA1mEP32CFe'
+
+    let firstUserSigned = if (sigVerify(tx.bodyBytes, tx.proofs[0], firstUser)) then 1
+        else if (sigVerify(tx.bodyBytes, tx.proofs[1], firstUser)) then 1
+        else if (sigVerify(tx.bodyBytes, tx.proofs[2], firstUser)) then 1
+        else 0
+    let secondUserSigned = if (sigVerify(tx.bodyBytes, tx.proofs[0], secondUser)) then 1
+        else if (sigVerify(tx.bodyBytes, tx.proofs[1], secondUser)) then 1
+        else if (sigVerify(tx.bodyBytes, tx.proofs[2], secondUser)) then 1
+        else 0
+    let thirdUserSigned = if (sigVerify(tx.bodyBytes, tx.proofs[0], thirdUser)) then 1
+        else if (sigVerify(tx.bodyBytes, tx.proofs[1], thirdUser)) then 1
+        else if (sigVerify(tx.bodyBytes, tx.proofs[2], thirdUser)) then 1
+        else 0
+    let signaturesCount = firstUserSigned + secondUserSigned + thirdUserSigned
+
+    match (tx) {
+        case _ => signaturesCount >= 2
+    }
+}
 
         
